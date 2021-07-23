@@ -1,0 +1,79 @@
+﻿@{ ViewData["Title"] = "Privacy Policy"; }
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<div>
+    <label for="Country">Choose a Country:</label>
+
+    <select name="Country" id="country" onchange="task()">
+        <option value="India">India</option>
+        <option value="US">US</option>
+        <option value="UK">UK</option>
+        <option value="Canada">Canada</option>
+    </select>
+</div>
+
+<div>
+    <label for="State">Choose a State:</label>
+
+    <select name="State" id="state" onchange="task1()"></select>
+</div>
+
+<div>
+    <label for="District">Choose a District:</label>
+
+    <select name="District" id="district"></select>
+</div>
+
+
+
+<script>
+    function task() {
+        //var arNames = $('#state').val(); 
+        $.ajax({
+            type: "POST",
+            url: "/Home/Dropdown",
+            data: { drop: $("#country").val() },
+            dataType: 'json',
+            success: function (resp) {
+                debugger
+                var s = '<option value="-1">Please Select a State</option>';
+                for (var i = 0; i < resp.drop.length; i++) {
+                    s += '<option value="' + resp.drop[i] + '">' + resp.drop[i] + '</option>';
+                }
+                $("#state").html(s);
+                console.log(resp.drop.length);
+            },
+            error: function (resp) {
+                alert("Some Error");
+            }
+        });
+    }
+
+
+
+    function task1() {
+        //var arNames = $('#state').val(); 
+        $.ajax({
+            type: "POST",
+            url: "/Home/District",
+            data: { state: $("#state").val() },
+            dataType: 'json',
+            success: function (resp) {
+                debugger
+                var s = '<option value="-1">Please Select a District</option>';
+                for (var i = 0; i < resp.state.length; i++) {
+                    s += '<option value="' + resp.state[i] + '">' + resp.state[i] + '</option>';
+                }
+                $("#district").html(s);
+                //console.log(resp.drop.length);
+                //console.log(resp.state.length);
+
+            },
+            error: function (resp) {
+                alert("Some Error");
+            }
+        });
+    }
+</script>
