@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lan="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Puzzle</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
+   <style>
+    
+    div{
+        height: 450px;
+        width:700px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        margin: 5px;
+    }
+    body{
+        background-color:white;
+        text-align: center;
+    }
+  
+    button{
+        height: 100px;
+        width:100px;
+        margin: 10px;
+        background-color: black;
+        font-size: 50px;
+        
+    }
+    .divclass
+    {
+        margin:auto;
+    }
+    
+</style>
+</head>
+<body >
+    <h1 allign="center">Solve the  Puzzle!!!!</h1>
+    <div class="divclass" allign="center">
+        
+        <button data-turnable="true" data-number="3" id="1"></button>
+        <button data-turnable="true" data-number="7" id="2"></button>
+        <button data-turnable="true" data-number="4" id="3"></button>
+        <button data-turnable="true" data-number="7" id="4"></button>
+        <button data-turnable="true" data-number="5" id="5"></button>
+        <button data-turnable="true" data-number="6" id="6"></button>
+        <button data-turnable="true" data-number="6" id="7"></button>
+        <button data-turnable="true" data-number="8" id="8"></button>
+        <button data-turnable="true" data-number="1" id="9"></button>
+        <button data-turnable="true" data-number="8" id="10"></button>
+        <button data-turnable="true" data-number="5" id="11"></button>
+        <button data-turnable="true" data-number="1" id="12"></button>
+        <button data-turnable="true" data-number="2" id="13"></button>
+        <button data-turnable="true" data-number="4" id="14"></button>
+        <button data-turnable="true" data-number="3" id="15"></button>
+        <button data-turnable="true" data-number="2" id="16"></button>
+    </div>
+</body>
+</html>
+<script>
+    var previousButtonId = undefined;
+    var previousButtonNumber = undefined;
+    var wait = false;
+    $(document).ready(function(){
+        $('button').on("click",function(ele)
+        {
+            var turnable = ele.target.dataset.turnable;
+            if(!wait && previousButtonId == undefined && previousButtonNumber == undefined && turnable == 'true')
+            {
+                ele.target.dataset.turnable = 'false';
+                ele.target.textContent = ele.target.dataset.number;
+                ele.target.style.backgroundColor = 'yellowgreen';
+                previousButtonId = ele.target.id;
+                previousButtonNumber = ele.target.dataset.number;
+            }
+            else if(!wait && previousButtonId != undefined && previousButtonNumber != undefined && turnable == 'true'&& ele.target.id != previousButtonId)
+            {
+                ele.target.dataset.turnable = 'false';
+                ele.target.textContent = ele.target.dataset.number;
+                if(ele.target.dataset.number == previousButtonNumber )
+                {
+                    ele.target.style.backgroundColor = 'green';
+                    $("#"+previousButtonId).css("backgroundColor","green");
+                    previousButtonId = undefined;
+                    previousButtonNumber = undefined;
+                   
+                }
+                else
+                {
+                    $("#"+previousButtonId).css("backgroundColor","black");
+                    ele.target.style.backgroundColor = 'black';
+                    wait = true;
+                    setTimeout(()=>{
+                        ele.target.dataset.turnable = 'true';
+                        ele.target.textContent = "";
+                        $("#"+previousButtonId).attr("data-turnable","true");    
+                        $("#"+previousButtonId).textContent="";
+                        previousButtonId = undefined;
+                        previousButtonNumber = undefined;
+                        wait = false;
+                    },100);
+                }   
+            }            
+        })
+    })
+    
+</script>
