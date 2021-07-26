@@ -1,0 +1,62 @@
+﻿
+<h1>Grid View From DB</h1>
+
+
+
+<div id="example">
+    <div id="gridDB"></div>
+</div>
+
+<script>
+
+    debugger
+    $("#gridDB").kendoGrid({
+        dataSource: {
+            transport: {
+                read: {
+                    url: '/Home/Employee',
+                    type: "get",
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                },
+
+            },
+            schema: {
+                data: function (employees) {
+                    return employees;
+                },
+                model: {
+                    fields: {
+                        emp_Id: { type: "number" },
+                        emp_Name: { type: "string" },
+                        emp_Salary: { type: "decimal" },
+                        emp_DOB: { type: "date" },
+                        emp_Address: { type: "string" },
+                        emp_Status: { type: "string" }
+
+                    }
+                }
+            },
+            pageSize: 10
+        },
+        height: 550,
+        toolbar: ["search"],
+        scrollable: true,
+        sortable: true,
+        filterable: true,
+        pageable: {
+            input: true,
+            numeric: false
+        },
+        columns: [
+            "emp_Id",
+            { field: "emp_Name", title: "EmployeeName"/*, format: "{0:c}"*/, width: "130px" },
+            { field: "emp_Salary", title: "EmployeeSalary", width: "130px", filterable: false },
+            { field: "emp_DOB", title: "EmployeeDOB", width: "130px", format: "{0:MM/dd/yyyy}" },
+            { field: "emp_Address", title: "EmployeeAddress ", width: "130px", filterable: false },
+            { field: "emp_Status", title: "EmployeeStatus", width: "130px" },
+        ]
+    });
+
+</script>
+

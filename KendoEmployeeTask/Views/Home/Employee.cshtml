@@ -1,0 +1,60 @@
+﻿
+@*<h1>Grid View From DB</h1>*@
+
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.default-v2.min.css" />
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+
+<div id="example">
+    <div id="gridDB"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        debugger
+        $("#gridDB").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: '/Home/Employee',
+                        type: "get",
+                        dataType: "json",
+                        contentType: 'application/json; charset=utf-8',
+                    },
+
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            Emp_Id: { type: "number" },
+                            Emp_Name: { type: "string" },
+                            Emp_Salary: { type: "number" },
+                            Emp_DOB: { type: "number" },
+                            Emp_Address: { type: "string" },
+                            Emp_Status: { type: "string" }
+                            
+                        }
+                    }
+                },
+                pageSize: 10
+            },
+            height: 550,
+            scrollable: true,
+            sortable: true,
+            filterable: true,
+            pageable: {
+                input: true,
+                numeric: true
+            },
+            columns: [
+                "Emp_Id",
+                { field: "Emp_Name", title: "EmployeeName"/*, format: "{0:c}"*/, width: "130px" },
+                { field: "Emp_Salary", title: "EmployeeSalary", width: "130px" },
+                { field: "Emp_DOB", title: "EmployeeDOB", width: "130px" },
+                { field: "Emp_Address", title: "EmployeeAddress ", width: "130px" },
+                { field: "Emp_Status", title: "EmployeeStatus", width: "130px" },
+            ]
+        });
+    });
+</script>
+

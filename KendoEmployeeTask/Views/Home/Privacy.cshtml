@@ -1,0 +1,45 @@
+﻿
+<h1>@ViewData["Title"]</h1>
+<div>
+    
+    <input id="date"/>
+</div>
+<div id="example">
+    <input id="startdate" onchange="first()"/>
+
+</div>
+<div>
+    <input id="enddate" disabled/>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var Todaydate = new Date();
+        var firstDay = new Date(Todaydate.getFullYear(), Todaydate.getMonth(), 1);
+        var lastDay = new Date(Todaydate.getFullYear(), Todaydate.getMonth() + 1, 0);
+        $("#date").kendoDatePicker({
+            min: firstDay,
+            value: Todaydate,
+            max: lastDay,
+        })
+
+        $("#startdate").kendoDatePicker({
+            value: new Date(),
+        });
+        var newDate = kendo.date.addDays(new Date($("#startdate").val()), 7);
+        //console.log(newDate);
+        $("#enddate").kendoDatePicker({
+            value: newDate,
+        });
+
+    });
+
+    function first() {
+
+        var newDate = kendo.date.addDays(new Date($("#startdate").val()), 7);
+        var s = $("#enddate").data("kendoDatePicker");
+        s.value(newDate);
+    }
+
+</script>
+
